@@ -1,0 +1,7 @@
+/.venv/
+/.idea
+/__pycache__/
+
+
+/API key for GEMINI.txt
+/main.py
