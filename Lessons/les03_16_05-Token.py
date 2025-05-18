@@ -3,7 +3,7 @@
 # print('#' * 115)      # Для разделения блоков на листе с кодом:
 """ ################################################################################################################
  16.05.25
- AI  &  Python 03:  ____________.
+ AI  &  Python 03:  Token.
  ################################################################################################################### """
 
 # Video Lesson 03: ------------.
@@ -35,14 +35,14 @@ from google import genai
 import os
 # ++++++++++++++++++++++++
 
-#  Код для запроса к API
 
-# Загрузка API-ключа из переменной окружения
+# ______ Код для запроса к API ______
+# Загрузка API-ключа из переменной окружения:
 api_key = os.getenv("GEMINI_API_KEY")
-# Создание клиента API
+# Создание клиента API:
 client = genai.Client(api_key=api_key)
 
-# Отправка запроса к модели
+# Отправка запроса к модели:
 response = client.models.generate_content(
     model="gemini-2.0-flash",
     contents=["Hi Gemini :) I'm glad to see here )"]
@@ -53,16 +53,16 @@ response = client.models.generate_content(
 print(response.text)
 
 # Для работы в консоли:
-# export GEMINI_API_KEY='ВАШ АПИ КЛЮЧ'  --- для Линукса.
-# $env:GEMINI_API_KEY --- для Виндовс.
+# export GEMINI_API_KEY='ВАШ АПИ КЛЮЧ'  ---> для Linux.
+# $env:GEMINI_API_KEY ---> для Windows.
 
 # Проверить наличие ключа:
-# echo $env:GEMINI_API_KEY -- для Винды.
+# echo $env:GEMINI_API_KEY ---> для Windows.
 
 """ __ NB! __  Запускать только из КОНСОЛИ!  """
-# Для запуска в консоли: Lessons/les03_16_05-Token.py
+# Для запуска в консоли: python Lessons/les03_16_05-Token.py
 
-# Процедура выхода из ВИРТ ОКРУЖЕНИЯ и создания НОВОГО:
+# Процедура выхода из ВИРТУАЛЬНОГО ОКРУЖЕНИЯ и создания НОВОГО:
 # Teacher 23 Teacher 23 12:07
 # python3 -m venv myvenv        # Для создания нового вирт окружения в Линукусе.
 # . myvenv/bin/activate             # Для активации нового вирт окружения в Линукусе.
