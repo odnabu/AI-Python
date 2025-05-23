@@ -67,7 +67,7 @@ except KeyError:
 if api_key:
     try:
         # Код, использующий api_key:
-        print(f"Использование API ключа: {api_key}")
+        print(f"Использование API ключа: \033[40;36m{'api_key'}\033[0m")
         # Отправка запроса к модели:
         response = client.models.generate_content(
             model="gemini-2.0-flash",
