@@ -133,6 +133,11 @@ print(formatted_output)
 # Зарегистрируйтесь на PromptHub и изучите его интерфейс. Найдите и опишите 3 интересных промпта.
 # Dvornik Olga aka odnabu on PromptHub: https://app.prompthub.us/odnabu
 
+# ===  PROMPTS in "Healthcare & Medical" and "Data Analyze" from PromptHub  ===============================
+# 1 - https://app.prompthub.us/taliaz/triage-summary-o1-mhs
+# 2 - https://app.prompthub.us/biocode/diagnosis-tagger
+# 3 - https://app.prompthub.us/nicos-team-7805/gmail-data-extraction
+
 
 """ ______  Task 3  ______________________________________________________________________________________________ """
 # (Дополнительно) Создайте цепочку "вопрос-ответ по документам" для небольшого текстового файла.
