@@ -16,7 +16,7 @@
 # Shift + F6 - заменить имя элемента во всех частях во всех файлах.
 # -----------------------------------------------------------
 
-print('.' * 80)
+print('.' * 60)
 
 
 """" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%_____________   LangChain:       ____________%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -28,9 +28,66 @@ print('.' * 80)
 # pip install langchain_core
 # pip install langchain_community
 
+# Python file has "No Module Named bs4.": https://stackoverflow.com/questions/11783875/importerror-no-module-named-bs4-beautifulsoup
+# ---> install BeautifulSoup4 (bs4):
+# pip install beautifulsoup4
+
 """ __________ Пример цепочки в LangChain __________ """
 # Пример цепочки в LangChain --> Решение: Slide 19, Video 5, 12:00.
+# Video 5 --- https://player.vimeo.com/video/1086361719?h=0ff4830d57
 # File on GitHub: https://github.com/viacheslav-bandylo/llm-course/blob/main/lesson-ai-05/ai5-1.py
+
+
+# ЗАДАНИЕ: создать приложение, которое суммаризирует текст с заданной веб-страницы.
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Функция для создания цепочки, которая объединяет документы и обрабатывает их с помощью LLM:
+from langchain.chains.combine_documents import create_stuff_documents_chain
+# Класс для создания шаблонов промптов для чата:
+from langchain_core.prompts import ChatPromptTemplate
+# Класс для работы с генеративной моделью от Google:
+from langchain_google_genai import ChatGoogleGenerativeAI
+# Класс для загрузки документов (в данном случае – веб-страницы):
+from langchain_community.document_loaders import WebBaseLoader
+# Модуль для работы с переменными окружения (из файла .env):
+from dotenv import load_dotenv
+# Модуль для работы с операционной системой (например, для получения переменных окружения):
+import os
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+# Загружаем переменные окружения из файла .env. Это нужно, чтобы получить секретные ключи,
+# НЕ прописывая их в коде:
+load_dotenv()
+api_key = os.getenv("GEMINI_API_KEY")
+
+# Инициализируем генеративную модель Google с указанной моделью "gemini-2.0-flash" и передаём ей API-ключ:
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=api_key)
+
+# Создаем загрузчик, который скачает содержимое указанного веб-адреса:
+loader = WebBaseLoader("https://habr.com/ru/articles/883604/")
+
+# Загружаем документ с веб-страницы. В переменной docs будет храниться текст или структура полученного документа:
+docs = loader.load()
+
+# Создаем шаблон для промптов, который будет использоваться для генерации ответа.
+# Здесь {context} - это место, куда подставится загруженный документ.
+prompt = ChatPromptTemplate.from_template("Напишите краткое изложение следующего текста: {context}")
+
+# Создаем цепочку, которая объединяет документы и передает их в LLM вместе с подсказкой:
+chain = create_stuff_documents_chain(llm, prompt)
+
+# Запускаем цепочку, передавая загруженный документ в качестве параметра "context".
+# Функция invoke (invoke буквально обозначает "вызвать", в нашем случае вызвать цепочку)
+# обрабатывает входные данные и возвращает результат от модели:
+result = chain.invoke({"context": docs})
+
+# Выводим полученный результат (например, краткое изложение текста) на экран:
+print(result)
+
+""" _NB!_    ___  QUESTION  ___ """
+# Что означает это ошибка? ---> See Video 5, 26:45.
+# "USER_AGENT environment variable not set, consider setting it to identify your requests."
+
 
 
 """" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%_____________   LangChain:       ____________%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 

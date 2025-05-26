@@ -15,7 +15,7 @@
 # Shift + F6 - заменить имя элемента во всех частях во всех файлах.
 # -----------------------------------------------------------
 
-print('.' * 70)
+print('.' * 60)
 
 """ ______  Task 1  ______________________________________________________________________________________________ """
 # Обязательно к выполнению.
@@ -445,6 +445,8 @@ texts_to_index = [
     "Домашние кошки нуждаются в заботе и внимании.",
     "Как собаки, так и кошки - верные питомцы, особенно тем хозяевам, которых они полюбили."
 ]
+# Количество фраз в списке texts_to_index:
+print(f'Number of phrases in texts_to_index: {len(texts_to_index)}')
 
 # 2. Получение embedding для каждого текста и сохранение их в списке:
 embeddings_list = [get_embedding(text) for text in texts_to_index]
@@ -477,10 +479,75 @@ search_query = "Что важно знать невротику?"
 # search_query = "Забота о любимом питомце."
 search_results = semantic_search(search_query, index, texts_to_index, k=5)
 
-print(f"\n\033[0;36;40m{'---  Результаты семантического поиска':-<70}\033[0m")
+print(f"\n\033[0;36;40m{'---  Результаты семантического поиска  ':-<60}\033[0m")
 print(f"\033[0;35mЗапрос:\033[0m '{search_query: <10}'")
 print("\033[0;35mНайденные соответствия:\033[0m")
 for i, result in enumerate(search_results, start=1):
     print(f"\033[0;35m{i}\033[0m - {result}")
 
+
+"""  ___ Визуализация векторов в 2D (через PCA или t-SNE) ___________________________________________"""
+# Чтобы визуализировать эмбеддинги в 2D и сравнить их, можно использовать метод понижения размерности,
+# например, PCA или t-SNE. В текущей среде может быть не установлен пакет sentence-transformers,
+# необходимый для получения эмбеддингов.
+# Далее код, который можено запустить локально (например, в Jupyter Notebook или PyCharm):
+# Установка необходимых библиотек:
+# pip install sentence-transformers matplotlib scikit-learn
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+from sklearn.decomposition import PCA
+from sklearn.metrics.pairwise import cosine_similarity      # косинусное сходство
+import matplotlib.pyplot as plt
+from sentence_transformers import SentenceTransformer
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+# Шаг 1: Модель для получения эмбеддингов
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# Шаг 2: Примеры предложений
+sentences = [
+    "Кошка сидит на окне",
+    "На подоконнике лежит кот",
+    "Собака бегает по парку",
+    "Стул стоит у стены"
+]
+
+# Шаг 3: Получаем эмбеддинги:
+# embeddings = model.encode(sentences)
+embeddings = model.encode(texts_to_index)       # Список фраз из задания по семантическому поиску: Task 2.2.
+
+# Шаг 4: Считаем косинусное сходство:
+similarities = cosine_similarity(embeddings)
+print("Косинусное сходство:\n", similarities)
+
+# Шаг 5: Уменьшаем размерность для визуализации:
+pca = PCA(n_components=2)
+reduced = pca.fit_transform(embeddings)
+
+# Шаг 6: Визуализация:
+plt.figure(figsize=(8, 6))
+# colors = ['green', 'green', 'red', 'blue']
+
+# Генерация градиента из 38 цветов для всех фраз в списке texts_to_index:
+    # Выбираем colormap: 'jet' — от синего через жёлтый к красному:
+cmap = plt.get_cmap('jet')
+    # Генерация 38 равномерных значений от 0 до 1
+colors = [cmap(i / 37) for i in range(38)]
+#     # Преобразуем цвета в формат HEX (удобно использовать в HTML или визуализациях)
+# hex_colors = [plt.colors.to_hex(c) for c in colors]
+#     # Все 38 цветов:
+# for i, color in enumerate(hex_colors, 1):
+#     print(f"{i:2d}: {color}")
+
+# Ассоциация списка цветов со списком фраз texts_to_index:
+for i, (x, y) in enumerate(reduced):
+    plt.scatter(x, y, color=colors[i])
+    plt.text(x + 0.01, y + 0.01, texts_to_index[i][:10], fontsize=8)
+
+print(f"\n\033[0;36;40m{'---  Визуализация векторов в 2D (через PCA или t-SNE)  ':-<60}\033[0m")
+
+plt.title("Визуализация эмбеддингов (PCA)")
+plt.grid(True)
+plt.tight_layout()
+plt.show()
 
