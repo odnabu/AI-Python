@@ -273,7 +273,7 @@ def main():
         # Вид на океанские волны  в штормовую погоду с пляжа на берегу Атлантического океана в Португалии:
         "View of ocean waves in stormy weather from a beach on the Atlantic Ocean in Portugal.",
         # Межзвездное космическое пространство на окраине галактики с видом на центр галактики.
-        "Interstellar space on the outskirts of the galaxy with a view of the center of the galaxy.",
+        "Interstellar span on the outskirts of the galaxy with a view of the center of the galaxy.",
     ]
 
     # \\\\\\\\\\\\\\\\\\ ___ ЗДЕСЬ НУЖНО ПОМЕНЯТЬ МОДЕЛЬ ___ See Video 8, 00:05. ////////////////////////////////

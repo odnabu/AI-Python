@@ -14,7 +14,7 @@
 #   - Устанавливаем python-пакеты с помощью pip: https://pythonworld.ru/osnovy/pip.html
 #
 # def input_numb_list():
-#     numb_list = [int(x) for x in input('Enter a list of numbers separated by space: ').split()]
+#     numb_list = [int(x) for x in input('Enter a list of numbers separated by span: ').split()]
 #     return numb_list
 # ------------------------ SHORTCUTS ------------------------
 # Ctrl + W - выделить текущий блок. если нажимать это сочетание дальше, то будут выделяться родительские блоки.
