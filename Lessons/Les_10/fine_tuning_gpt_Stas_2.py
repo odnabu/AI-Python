@@ -1,5 +1,8 @@
+
+""" __ NB! __ Тут нужно сначала поменять все пути для папок и файлов, потому что они СТАСА."""
+
 from transformers import (
-    AutoModelForSequenceClassification,
+    AutoModelForSequenceClassification,     # Модель, предобученная для КЛАССИФИКАЦИИ данных.
     AutoTokenizer,
     Trainer,
     TrainingArguments,
@@ -38,10 +41,10 @@ tokenized_dataset = dataset.map(tokenize, batched=True)
 
 # 4. Аргументы тренировки
 training_args = TrainingArguments(
-    output_dir="./results",
+    output_dir="./results_stas_2",
     per_device_train_batch_size=4,
     num_train_epochs=2,
-    logging_dir="./logs",
+    logging_dir="./logs_stas_2",
     logging_steps=10
 )
 
@@ -55,7 +58,7 @@ trainer = Trainer(
 trainer.train()
 
 # 6. Предсказание на новом примере
-text = "What is the capital city of germany?"
+text = "What is the capital city of Germany?"
 inputs = tokenizer(text, return_tensors="pt")
 
 # перемещаем входные данные на то же устройство, где модель

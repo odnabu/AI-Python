@@ -3,7 +3,7 @@ from transformers import (
     AutoTokenizer,
     Trainer,
     TrainingArguments,
-    AutoModelForCausalLM
+    AutoModelForCausalLM,
 )
 from datasets import Dataset
 import torch
@@ -17,7 +17,7 @@ import torch
 # _____ Installing previous versions of PyTorch: https://pytorch.org/get-started/previous-versions/
 # pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu126
 
-# 1. Загрузка модели и токенизатора:
+# 1. Загрузка модели и токенизатор:
 model_name = "distilbert-base-uncased"
 model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
